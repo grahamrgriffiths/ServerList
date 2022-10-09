@@ -3,11 +3,55 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ServerList.Views.ServerListPage"
              Title="ServerList">
-    <VerticalStackLayout>
-        
+    <VerticalStackLayout
+        Spacing="25"
+        Padding="30,0"
+        VerticalOptions="Start"
+        >        
         <Label 
             Text="Current Location:"
             VerticalOptions="Center" 
             HorizontalOptions="Center" />
+
+        <Editor x:Name="TextEditor"
+                Placeholder="Enter location"
+                HeightRequest="10" />
+
+        <ListView ItemsSource="{Binding Servers}">
+            <ListView.ItemTemplate>
+                <DataTemplate>
+                    <ViewCell>
+                        <Grid Padding="10">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="Auto" />
+                                <ColumnDefinition Width="Auto" />
+                            </Grid.ColumnDefinitions>
+                           
+                            <Label Grid.Column="1"
+                           Text="{Binding Name}"
+                           FontAttributes="Bold" />
+                            <Label Grid.Row="1"
+                           Grid.Column="1"
+                           Text="{Binding Location}"
+                           FontAttributes="Italic"
+                           VerticalOptions="End" />
+                        </Grid>
+                    </ViewCell>
+                </DataTemplate>
+            </ListView.ItemTemplate>
+        </ListView>
+
+        <Grid ColumnDefinitions="*,*" ColumnSpacing="4">
+            <Button Text="Refresh"
+                    Clicked="RefreshButton_Clicked" />
+
+            <Button Grid.Column="1"
+                    Text="Close App"
+                    Clicked="CloseButton_Clicked" />
+        </Grid>
     </VerticalStackLayout>
 </ContentPage>
