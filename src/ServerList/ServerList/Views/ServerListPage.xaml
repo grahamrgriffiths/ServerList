@@ -1,8 +1,12 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:ServerList.ViewModels"
              x:Class="ServerList.Views.ServerListPage"
              Title="ServerList">
+    <ContentPage.BindingContext>
+        <local:ServerListViewModel />
+    </ContentPage.BindingContext>
     <StackLayout
         Spacing="25"
         Padding="30,0"
@@ -10,18 +14,14 @@
         VerticalOptions="Start"
         >
         
-        <Label 
-            Text="Current Location:"
-            VerticalOptions="Center" 
-            HorizontalOptions="Center" />
-
-        <Editor x:Name="TextEditor"
+        <!--<Editor x:Name="TextEditor"
                 Placeholder="Enter location"
                 HeightRequest="10"
                 Text="{Binding Location.Country}"
-                />
+                />-->
+        <Label Text="{Binding Location.Country, StringFormat='Current Location: {0}'}" />
         <Label Text="Pull the items down to refresh the Servers, or click 'refresh'." />
-        <Label Text="{Binding Servers.Count, StringFormat='Number of server: {0}'}" />
+        <Label Text="{Binding Servers.Count, StringFormat='Number of servers: {0}'}" />
         <ListView ItemsSource="{Binding Servers}"
                   IsPullToRefreshEnabled="true"
                   RefreshCommand="{Binding RefreshCommand}"

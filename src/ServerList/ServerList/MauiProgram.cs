@@ -1,4 +1,8 @@
-﻿namespace ServerList;
+﻿using Common.Http;
+using Microsoft.Extensions.Logging;
+using ServerList.ViewModelServices;
+
+namespace ServerList;
 
 public static class MauiProgram
 {
@@ -13,6 +17,11 @@ public static class MauiProgram
 				fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
 			});
 
-		return builder.Build();
+		builder.Services.AddSingleton<IHttpWrapper, HttpWrapper>();
+        builder.Services.AddSingleton<IServerListService, ServerListService>();
+		builder.Services.AddLogging((loggingBuilder) => loggingBuilder
+						.SetMinimumLevel(LogLevel.Trace));
+			
+        return builder.Build();
 	}
 }

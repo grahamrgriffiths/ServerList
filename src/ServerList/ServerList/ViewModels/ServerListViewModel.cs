@@ -1,5 +1,5 @@
 ﻿using Core.Models;
-using Newtonsoft.Json;
+using ServerList.ViewModelServices;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
@@ -7,10 +7,14 @@ namespace ServerList.ViewModels
 {
     public class ServerListViewModel : BaseViewModel
     {
-        const int RefreshDuration = 2;
-        bool isRefreshing;
+        private readonly IServerListService _serverListService;
+        public ServerListViewModel(IServerListService serverListService)
+        {
+            _serverListService = serverListService;
+        }
 
-        LogicalServer selectedServer;
+        const int RefreshDuration = 5;
+        bool isRefreshing;
 
         public ObservableCollection<LogicalServer> Servers { get; private set; } = new ObservableCollection<LogicalServer>();
 
@@ -36,59 +40,32 @@ namespace ServerList.ViewModels
 
         public ServerListViewModel()
         {
-            PopulateServerList();
+            Location = new LocationResponse { Country = "N/A" };
+            PopulateViewModelData();
         }
 
         private async Task RefreshDataAsync()
         {
             IsRefreshing = true;
             await Task.Delay(TimeSpan.FromSeconds(RefreshDuration));
-            PopulateServerList();
+            PopulateViewModelData();
             IsRefreshing = false;
         }
 
         private void Close()
         {
             Application.Current?.CloseWindow(Application.Current.MainPage.Window);
+            Application.Current?.Quit();
         }
 
-        private void PopulateServerList()
+        private async void PopulateViewModelData()
         {
-            // todo: Move to viewModelService class
-            var httpClient = new HttpClient();
-            string response;
-
-            try
+            Location = await _serverListService.GetLocationData();
+            var logicalServers = await _serverListService.GetLogicalServers(Location);
+            
+            foreach (var server in logicalServers.Where(server => server.Status == 1))
             {
-                response = httpClient.GetStringAsync("https://api.protonvpn.ch/vpn/location").Result;
-                File.WriteAllText(Path.GetTempPath() + "\\Location.json", response);
-            }
-            catch (Exception)
-            {
-                response = File.ReadAllText(Path.GetTempPath() + "\\Location.json");
-            }
-
-            var deserializedLocation = JsonConvert.DeserializeObject<LocationResponse>(response);
-
-            Location = deserializedLocation;
-
-            try
-            {
-                response = httpClient.GetStringAsync("https://api.protonvpn.ch/vpn/logicals").Result;
-                File.WriteAllText(Path.GetTempPath() + "\\Logicals.json", response);
-            }
-            catch (Exception)
-            {
-                response = File.ReadAllText(Path.GetTempPath() + "\\Logicals.json");
-            }
-
-            var deserializedLogicals = JsonConvert.DeserializeObject<LogicalsResponse>(response);
-
-            //Servers = new List<LogicalServer>();
-            foreach (var server in deserializedLogicals.LogicalServers)
-            {
-                if (server.Status == 1)
-                    Servers.Add(server);
+                Servers.Add(server);
             }
         }
     }
