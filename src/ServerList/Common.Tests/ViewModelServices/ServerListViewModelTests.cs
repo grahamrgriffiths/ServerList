@@ -11,10 +11,12 @@ namespace ServerList.Tests.ViewModelServices
     public class ServerListServiceTests
     {
         private readonly Mock<IHttpWrapper> _mockHttpWrapper;
+        private readonly Mock<IServerListService> _mockServerListService;
         private readonly ServerListService _objectToTest;
         public ServerListServiceTests()
         {
             _mockHttpWrapper = new Mock<IHttpWrapper>();
+            _mockServerListService = new Mock<IServerListService>();
             _objectToTest = new ServerListService(_mockHttpWrapper.Object);
         }
 
@@ -53,7 +55,7 @@ namespace ServerList.Tests.ViewModelServices
 
         public class GetLogicalServersTests : ServerListServiceTests
         {
-            private void SetupGetLogicalServersTests()
+            private void SetupGetLogicalServersTests(LocationResponse mockLocation)
             {
                 var mockLogicalsResponse = @"{
                     ""Code"": 1000,
@@ -95,19 +97,25 @@ namespace ServerList.Tests.ViewModelServices
                 _mockHttpWrapper
                     .Setup(x => x.HttpGetAsync(It.IsAny<string>(), It.IsAny<string>(), null))
                     .ReturnsAsync(mockLogicalsResponse);
+
+                _mockServerListService.Setup(x => x.GetLogicalServers(mockLocation))
+                    .ReturnsAsync(new List<LogicalServer>() {
+                    new LogicalServer { Location = mockLocation } }
+                );
+
             }
 
             [Theory, AutoData]
             public async Task Gets_LocationData_From_Source(LocationResponse mockLocation)
             {
                 // Arrange
-                SetupGetLogicalServersTests();
-
+                SetupGetLogicalServersTests(mockLocation);
+                
                 // Act
-                var actual = await _objectToTest.GetLogicalServers(mockLocation);
+                var actual = await _mockServerListService.Object.GetLogicalServers(mockLocation);
 
                 // Assert
-                _mockHttpWrapper.Verify(x => x.HttpGetAsync(It.IsAny<string>(), It.IsAny<string>(), null), Times.Once);
+                _mockServerListService.Verify(x => x.GetLogicalServers(mockLocation), Times.Once);
                 actual.Should().HaveCountGreaterThan(0);
             }
         }
