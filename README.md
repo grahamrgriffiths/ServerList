@@ -6,7 +6,7 @@
 The purpose of this app is to retrieve basic location information and list of servers
 from a RESTful API and present that information in the window. Data is downloaded
 automatically at app start and refreshed on request by the user. The app is able to
-fall back on a cache in case the API is unavailable. T
+fall back on a cache in case the API is unavailable.
 
 ## Planning
 To assist with planning the task, I setup a [GitHub Project board](https://github.com/users/grahamrgriffiths/projects/2). Usually, I would use Trello - but I've been meaning to try [projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)
