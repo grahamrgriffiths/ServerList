@@ -12,11 +12,6 @@
         VerticalOptions="Start"
         >
         
-        <!--<Editor x:Name="TextEditor"
-                Placeholder="Enter location"
-                HeightRequest="10"
-                Text="{Binding Location.Country}"
-                />-->
         <Label IsVisible="true" Text="{Binding LocationCountry, StringFormat='Current Location: {0}'}" />
         <Label Text="Pull the items down to refresh the Servers, or click 'refresh'." />
         <Label Text="{Binding Servers.Count, StringFormat='Number of servers: {0}'}" />
