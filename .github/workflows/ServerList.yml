@@ -13,7 +13,7 @@ jobs:
     name: Build
     defaults:
       run:
-        working-directory: src
+        working-directory: src/ServerList
 
     runs-on: ubuntu-latest
 
