@@ -1,23 +1,19 @@
+using Common.Http;
 using ServerList.ViewModels;
+using ServerList.ViewModelServices;
 
 namespace ServerList.Views;
 
 public partial class ServerListPage : ContentPage
 {
-	public ServerListPage()
-	{
+    //public ServerListPage(IServerListService serverListService, IHttpWrapper httpWrapper)
+    public ServerListPage()
+    {
 		InitializeComponent();
-		BindingContext = new ServerListViewModel();
-	}
-
-    private void CloseButton_Clicked(object sender, EventArgs e)
-	{
-		
+        // TODO: Can't get the DI to work here
+        // //var settingsService = this.Handler.MauiContext.Services.GetServices<IServerListService>();
+        //BindingContext = new ServerListViewModel(serverListService);
+        BindingContext = new ServerListViewModel(new ServerListService(new HttpWrapper()));
 
     }
-
-	private void RefreshButton_Clicked(object sender, EventArgs e)
-	{
-
-	}
 }

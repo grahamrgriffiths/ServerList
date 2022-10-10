@@ -6,7 +6,7 @@ namespace ServerList.ViewModelServices
 {
     public class ServerListService : IServerListService
     {
-        private IHttpWrapper _httpWrapper;
+        private readonly IHttpWrapper _httpWrapper;
         public ServerListService(IHttpWrapper httpWrapper)
         {
             _httpWrapper = httpWrapper;

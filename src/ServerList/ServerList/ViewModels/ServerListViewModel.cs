@@ -8,10 +8,6 @@ namespace ServerList.ViewModels
     public class ServerListViewModel : BaseViewModel
     {
         private readonly IServerListService _serverListService;
-        public ServerListViewModel(IServerListService serverListService)
-        {
-            _serverListService = serverListService;
-        }
 
         const int RefreshDuration = 5;
         bool isRefreshing;
@@ -38,8 +34,10 @@ namespace ServerList.ViewModels
         public ICommand RefreshCommand => new Command(async () => await RefreshDataAsync());
         public ICommand CloseCommand => new Command(Close);
 
-        public ServerListViewModel()
+        public ServerListViewModel(IServerListService serverListService)
         {
+            _serverListService = serverListService;
+        
             Location = new LocationResponse { Country = "N/A" };
             PopulateViewModelData();
         }

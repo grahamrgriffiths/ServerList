@@ -4,9 +4,7 @@
              xmlns:local="clr-namespace:ServerList.ViewModels"
              x:Class="ServerList.Views.ServerListPage"
              Title="ServerList">
-    <ContentPage.BindingContext>
-        <local:ServerListViewModel />
-    </ContentPage.BindingContext>
+
     <StackLayout
         Spacing="25"
         Padding="30,0"
