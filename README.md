@@ -12,22 +12,17 @@ fall back on a cache in case the API is unavailable. T
 To assist with planning the task, I setup a [GitHub Project board](https://github.com/users/grahamrgriffiths/projects/2). Usually, I would use Trello - but I've been meaning to try [projects](https://docs.github.com/en/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)
 
 ## Expanding the application
-An intern has left behind this piece of code. Refactor it as much as possible into clean 
-code according to best practices and fix the bugs and missing functionalities:
-- The Current location displays nothing.
+An intern had left behind this piece of code. The task was to refactor it as much as possible into clean 
+code according to best practices and fix the bugs and missing functionalities.
+
+The following was fixed:
 - The app occasionally crashes when scrolling servers down or refreshing.
-- The servers should be listed by the distance from the current location in an ascending 
-order.
 - The window layout becomes ugly when resizing.
 
-Feel free to switch to .NET Core or use library/framework that can make your life easier.
-
-Among other things, we value:
-- Beautiful high-quality code.
-- Usage of MVVM and dependency injection pattern.
-- Usage of async APIs where available, non-blocking UI.
-- Implemented logging.
-- Unit tests.
+These issues remain due to time constraints:
+- The Current location displays nothing.
+- The servers should be listed by the distance from the current location in an ascending 
+order.
 
 ### Architecture
 I chose the approach of updating the application to use [.NET MAUI](https://learn.microsoft.com/en-us/dotnet/maui/what-is-maui) and .NET 6
@@ -40,8 +35,10 @@ Async APIs have been used where available, to support a non-blocking UI.
 
 Unit tests have been implemented for the service logic only.
 
+![Architecture Overview](Architecture.png "Architecture Overview")
+
 ## Running the application
-To run the application locally, ensure you are in the directory 'CodingTest'
+To run the application locally, ensure you are in the directory 'src\ServerList'
 
 First, restore the dependencies.
 ```
@@ -53,14 +50,14 @@ Second, build the project,
 dotnet build
 ```
 
-Finally, run the project.
+Finally, run the project. Ensure that you use a framework that you have installed.
 ```
-dotnet run
+dotnet run --project .\ServerList\ServerList.csproj --framework net6.0-windows10.0.19041.0
 ```
 
 ## Testing the application
-Partial test coverage has been introduced for the Provider, Client, Parsing and CSV functionality.
-To test the application locally, ensure you are in the directory 'CodingTest'
+Partial test coverage has been introduced for the http wrapper and the view model service logic.
+To test the application locally, ensure you are in the directory 'src\ServerList'
 
 Run the tests
 ```
@@ -69,7 +66,7 @@ dotnet test
 
 Generate a test report (with coverage)
 ```
-dotnet test --settings settings/coverlet-run.xml --logger trx --results-directory "reports"
+dotnet test --settings ../../settings/coverlet-run.xml --logger trx --results-directory "reports"
 ```
 
 ## CI 
