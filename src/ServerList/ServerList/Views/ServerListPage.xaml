@@ -3,11 +3,13 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="ServerList.Views.ServerListPage"
              Title="ServerList">
-    <VerticalStackLayout
+    <StackLayout
         Spacing="25"
         Padding="30,0"
+        Margin="20"
         VerticalOptions="Start"
-        >        
+        >
+        
         <Label 
             Text="Current Location:"
             VerticalOptions="Center" 
@@ -15,9 +17,15 @@
 
         <Editor x:Name="TextEditor"
                 Placeholder="Enter location"
-                HeightRequest="10" />
-
-        <ListView ItemsSource="{Binding Servers}">
+                HeightRequest="10"
+                Text="{Binding Location.Country}"
+                />
+        <Label Text="Pull the items down to refresh the Servers, or click 'refresh'." />
+        <Label Text="{Binding Servers.Count, StringFormat='Number of server: {0}'}" />
+        <ListView ItemsSource="{Binding Servers}"
+                  IsPullToRefreshEnabled="true"
+                  RefreshCommand="{Binding RefreshCommand}"
+                  IsRefreshing="{Binding IsRefreshing}">
             <ListView.ItemTemplate>
                 <DataTemplate>
                     <ViewCell>
@@ -30,28 +38,19 @@
                                 <ColumnDefinition Width="Auto" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-                           
+
                             <Label Grid.Column="1"
                            Text="{Binding Name}"
                            FontAttributes="Bold" />
-                            <Label Grid.Row="1"
-                           Grid.Column="1"
-                           Text="{Binding Location}"
-                           FontAttributes="Italic"
-                           VerticalOptions="End" />
                         </Grid>
                     </ViewCell>
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-
+        
         <Grid ColumnDefinitions="*,*" ColumnSpacing="4">
-            <Button Text="Refresh"
-                    Clicked="RefreshButton_Clicked" />
-
-            <Button Grid.Column="1"
-                    Text="Close App"
-                    Clicked="CloseButton_Clicked" />
+            <Button Margin="300,57,6,179" Text="Refresh" IsEnabled="True" Command="{Binding RefreshCommand}"/>
+            <Button Grid.Column="1" Margin="300,57,6,179" Text="Close" IsEnabled="True" Command="{Binding CloseCommand}"/>
         </Grid>
-    </VerticalStackLayout>
+    </StackLayout>
 </ContentPage>
