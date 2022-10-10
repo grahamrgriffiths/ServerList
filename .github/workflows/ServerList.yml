@@ -64,7 +64,7 @@ jobs:
     
     defaults:
       run:
-        working-directory: src
+        working-directory: src/ServerList
 
     runs-on: windows-latest
 
@@ -96,6 +96,7 @@ jobs:
            path: ${{github.workspace}}/reports
 
   codeql:
+    if: ${{ false }}  # disable for now
     name: "Code QL Analyze"
 
     defaults:
