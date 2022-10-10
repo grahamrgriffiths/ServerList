@@ -41,7 +41,7 @@ Async APIs have been used where available, to support a non-blocking UI.
 Unit tests have been implemented for the service logic only.
 
 ## Running the application
-To run the application locally, ensure you are in the directory 'jobs\Backend\src\ExchangeRateUpdater.Console'
+To run the application locally, ensure you are in the directory 'CodingTest'
 
 First, restore the dependencies.
 ```
@@ -58,14 +58,9 @@ Finally, run the project.
 dotnet run
 ```
 
-For production, use
-```
-dotnet run --launch-profile Production
-```
-
 ## Testing the application
 Partial test coverage has been introduced for the Provider, Client, Parsing and CSV functionality.
-To test the application locally, ensure you are in the directory 'jobs\Backend\src'
+To test the application locally, ensure you are in the directory 'CodingTest'
 
 Run the tests
 ```
@@ -81,14 +76,12 @@ dotnet test --settings settings/coverlet-run.xml --logger trx --results-director
 A CI pipeline has been implemented for this task using Github Actions.
 
 The pipeline has the following workflows:
-- ExchangeRateUpdater CI
+- ServerList CI
     - Builds the application.
     - Tests the application. 
         - Generates a report, with coverage.
     - Runs OWASP dependency check.
     - Runs Code QL analysis.
-
-[![ExchangeRateUpdater CI](https://github.com/grahamrgriffiths/ExchangeRateProvider/actions/workflows/ExchangeRateUpdater.yml/badge.svg)](https://github.com/grahamrgriffiths/ExchangeRateProvider/actions/workflows/ExchangeRateUpdater.yml)
 
 
 ## Author
