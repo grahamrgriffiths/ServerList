@@ -28,6 +28,11 @@ namespace ServerList.ViewModelServices
             var httpResponse = await _httpWrapper.HttpGetAsync("https://api.protonvpn.ch/vpn/logicals", "Logicals.json");
             var deserializedLogicals = JsonConvert.DeserializeObject<LogicalsResponse>(httpResponse);
 
+            if (filterLocation.Country.Equals("GB"))
+            {
+                filterLocation.Country = "UK";
+            }
+
             // TODO: The servers should be listed by the distance from the current location in an ascending order.
             var orderedServers = deserializedLogicals.LogicalServers.OrderBy(x => deserializedLogicals.LogicalServers.FindIndex(y => x.Name.Contains(filterLocation.Country)));
             return orderedServers;
