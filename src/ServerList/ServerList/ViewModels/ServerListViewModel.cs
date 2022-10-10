@@ -1,5 +1,4 @@
-﻿using Common;
-using Core.Models;
+﻿using Core.Models;
 using ServerList.ViewModelServices;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
@@ -16,11 +15,11 @@ namespace ServerList.ViewModels
 
         public ObservableCollection<LogicalServer> Servers { get; private set; } = new ObservableCollection<LogicalServer>();
 
-        private LocationResponse _location;
-        public LocationResponse Location
+        private string _location;
+        public string LocationCountry
         {
             get => _location;
-            set => SetProperty(ref _location, value);
+            set => SetProperty(ref _location, value, nameof(LocationCountry));
         }
 
         public bool IsRefreshing
@@ -29,7 +28,7 @@ namespace ServerList.ViewModels
             set
             {
                 isRefreshing = value;
-                OnPropertyChanged();
+                OnPropertyChanged("IsRefreshing");
             }
         }
 
@@ -39,7 +38,7 @@ namespace ServerList.ViewModels
         public ServerListViewModel(IServerListService serverListService)
         {
             _serverListService = serverListService;        
-            Location = new LocationResponse { Country = "N/A" };
+            LocationCountry = "N/A";
             PopulateViewModelData();
         }
 
@@ -60,8 +59,10 @@ namespace ServerList.ViewModels
         private async void PopulateViewModelData()
         {
             // TODO: Location is not updating on the view
-            Location = await _serverListService.GetLocationData();
-            var logicalServers = await _serverListService.GetLogicalServers(Location);
+            var locationResponse = await _serverListService.GetLocationData();
+            LocationCountry = locationResponse.Country;
+
+            var logicalServers = await _serverListService.GetLogicalServers(locationResponse);
             
             foreach (var server in logicalServers.Where(server => server.Status == 1))
             {

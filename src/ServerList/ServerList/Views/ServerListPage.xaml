@@ -17,7 +17,7 @@
                 HeightRequest="10"
                 Text="{Binding Location.Country}"
                 />-->
-        <Label Text="{Binding Location.Country, StringFormat='Current Location: {0}'}" />
+        <Label IsVisible="true" Text="{Binding LocationCountry, StringFormat='Current Location: {0}'}" />
         <Label Text="Pull the items down to refresh the Servers, or click 'refresh'." />
         <Label Text="{Binding Servers.Count, StringFormat='Number of servers: {0}'}" />
         <ListView ItemsSource="{Binding Servers}"
