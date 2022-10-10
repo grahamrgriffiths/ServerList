@@ -1,15 +1,17 @@
-﻿using Core.Models;
+﻿using Common;
+using Core.Models;
 using ServerList.ViewModelServices;
 using System.Collections.ObjectModel;
 using System.Windows.Input;
 
 namespace ServerList.ViewModels
 {
+    /// <summary>
+    /// View model for server list page
+    /// </summary>
     public class ServerListViewModel : BaseViewModel
     {
         private readonly IServerListService _serverListService;
-
-        const int RefreshDuration = 5;
         bool isRefreshing;
 
         public ObservableCollection<LogicalServer> Servers { get; private set; } = new ObservableCollection<LogicalServer>();
@@ -36,8 +38,7 @@ namespace ServerList.ViewModels
 
         public ServerListViewModel(IServerListService serverListService)
         {
-            _serverListService = serverListService;
-        
+            _serverListService = serverListService;        
             Location = new LocationResponse { Country = "N/A" };
             PopulateViewModelData();
         }
@@ -45,7 +46,7 @@ namespace ServerList.ViewModels
         private async Task RefreshDataAsync()
         {
             IsRefreshing = true;
-            await Task.Delay(TimeSpan.FromSeconds(RefreshDuration));
+            //await Task.Delay(TimeSpan.FromSeconds(Constants.DEFAULT_REFRESH_DURATION));
             PopulateViewModelData();
             IsRefreshing = false;
         }
@@ -58,6 +59,7 @@ namespace ServerList.ViewModels
 
         private async void PopulateViewModelData()
         {
+            // TODO: Location is not updating on the view
             Location = await _serverListService.GetLocationData();
             var logicalServers = await _serverListService.GetLogicalServers(Location);
             

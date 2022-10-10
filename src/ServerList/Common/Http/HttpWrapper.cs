@@ -3,19 +3,29 @@ using System.Net;
 
 namespace Common.Http
 {
+    /// <summary>
+    /// Centralise http functionality
+    /// </summary>
     public class HttpWrapper : IHttpWrapper
     {
         private readonly ILogger _logger;
+        private HttpClient _httpClient;
+
         public HttpWrapper(ILogger<HttpWrapper> logger)
         {
             _logger = logger;
+            SetupClient();
         }
-        private readonly HttpClient _httpClient;
 
-        public HttpWrapper(HttpMessageHandler handler = null, bool disposeHandler = true)
+        public HttpWrapper()
+        {
+            SetupClient();
+        }
+
+        private void SetupClient()
         {
             // ensure single instance of http client is used
-            _httpClient = handler == null ? new HttpClient() : new HttpClient(handler, disposeHandler);
+            _httpClient = new HttpClient();
 
             // support newest security protocols on each request
             ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12 | SecurityProtocolType.Tls13;
@@ -26,7 +36,6 @@ namespace Common.Http
             // Increases the concurrent outbound connections
             ServicePointManager.DefaultConnectionLimit = 1024;
         }
-
         /// <summary>
         /// Wrapper method to issue http get async
         /// </summary>

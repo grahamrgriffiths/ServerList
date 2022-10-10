@@ -1,4 +1,5 @@
 using Common.Http;
+using Microsoft.Extensions.Logging;
 using ServerList.ViewModels;
 using ServerList.ViewModelServices;
 
@@ -6,7 +7,7 @@ namespace ServerList.Views;
 
 public partial class ServerListPage : ContentPage
 {
-    //public ServerListPage(IServerListService serverListService, IHttpWrapper httpWrapper)
+    //public ServerListPage(IServerListService serverListService)
     public ServerListPage()
     {
 		InitializeComponent();
@@ -14,6 +15,5 @@ public partial class ServerListPage : ContentPage
         // //var settingsService = this.Handler.MauiContext.Services.GetServices<IServerListService>();
         //BindingContext = new ServerListViewModel(serverListService);
         BindingContext = new ServerListViewModel(new ServerListService(new HttpWrapper()));
-
     }
 }
