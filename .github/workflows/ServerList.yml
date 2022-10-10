@@ -28,7 +28,7 @@ jobs:
     - name: Restore dependencies
       run: dotnet restore
     - name: Build
-      run: dotnet build --no-restore -c Release -f:net6.0-android
+      run: dotnet build --no-restore
       
   test:
     needs: build
