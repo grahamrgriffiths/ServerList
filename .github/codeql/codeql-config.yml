@@ -1,0 +1,7 @@
+paths:
+  - src
+paths-ignore:
+      - '**/*.Tests/**'
+
+queries:
+  - uses: security-and-quality
