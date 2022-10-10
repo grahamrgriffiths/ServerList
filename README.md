@@ -19,8 +19,6 @@ The following was fixed:
 - The app occasionally crashes when scrolling servers down or refreshing.
 - The window layout becomes ugly when resizing.
 - The Current location displays nothing.
-
-These issues remain due to time constraints:
 - The servers should be listed by the distance from the current location in an ascending 
 order.
 
