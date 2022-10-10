@@ -80,6 +80,7 @@ The pipeline has the following workflows:
     - Runs OWASP dependency check.
     - Runs Code QL analysis.
 
+[![ServerList CI](https://github.com/grahamrgriffiths/protoncodingtest/actions/workflows/ServerList.yml/badge.svg)](https://github.com/grahamrgriffiths/protoncodingtest/actions/workflows/ServerList.yml)
 
 ## Author
 [Graham Griffiths](https://github.com/grahamrgriffiths)
