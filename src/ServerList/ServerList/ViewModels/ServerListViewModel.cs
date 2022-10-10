@@ -45,7 +45,7 @@ namespace ServerList.ViewModels
         private async Task RefreshDataAsync()
         {
             IsRefreshing = true;
-            //await Task.Delay(TimeSpan.FromSeconds(Constants.DEFAULT_REFRESH_DURATION));
+            await Task.Delay(TimeSpan.FromSeconds(Constants.DEFAULT_REFRESH_DURATION));
             PopulateViewModelData();
             IsRefreshing = false;
         }
@@ -58,7 +58,6 @@ namespace ServerList.ViewModels
 
         private async void PopulateViewModelData()
         {
-            // TODO: Location is not updating on the view
             var locationResponse = await _serverListService.GetLocationData();
             LocationCountry = locationResponse.Country;
 
