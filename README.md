@@ -78,7 +78,7 @@ The pipeline has the following workflows:
     - Tests the application. 
         - Generates a report, with coverage.
     - Runs OWASP dependency check.
-    - Runs Code QL analysis.
+    - Runs Code QL analysis (Disabled for now)
 
 [![ServerList CI](https://github.com/grahamrgriffiths/protoncodingtest/actions/workflows/ServerList.yml/badge.svg)](https://github.com/grahamrgriffiths/protoncodingtest/actions/workflows/ServerList.yml)
 
